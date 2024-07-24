@@ -3,12 +3,20 @@
 <head>
     <meta charset="utf-8"/>
     <title>Shop</title>
+    <style>
+h1 {
+  text-align: center;
+}
+</style>
 </head>
 <body>
 
-    <h1>Hello!</h1><br>
+    <h1>IIC SHOP</h1><br>
     <div id="messages"></div>
-    <div id="container"></div>
+    <div id="container">
+        <div id="face" class="Box"></div>
+        <div id="product" class="Box"></div>
+    </div>
 <script>
         const socket = new WebSocket('ws://' + window.location.host + '/ws/some_path/');
 
@@ -17,12 +25,33 @@
             const data = JSON.parse(e.data);
             const messages = document.getElementById('messages');
             const container = document.getElementById('container');
+            const face = document.getElementById('face');
+            const product = document.getElementById('product');
 
             const message = document.createElement('div');
             message.textContent = data.message;
             console.log(data);
             console.log(data.product);
-            messages.appendChild(message);
+            //messages.appendChild(message);
+
+            //const name_header = document.getElementById('face-name');
+            const name_title = document.createElement('div');
+            name_title.textContent = data.face_name;
+            name_title.id = 'face_name';
+            console.log(name_title);
+            name_title.className = 'names';
+            face.appendChild(name_title);
+
+            //const product_header = document.getElementById('product-name');
+            const product_title = document.createElement('div');
+            product_title.textContent = data.product_name;
+            console.log(name_title);
+            product_title.id = 'product_name';
+            product_title.className = 'names';
+            product.appendChild(product_title);
+
+            //document.head.insertAdjacentHTML("beforeend", `<style>.names{margin: 100px;} #container{text-align:center;}</style>`);
+
 
             var face_img = new Image(350, 350);
             face_img.src = data.message;
@@ -31,15 +60,15 @@
             prod_img.src = data.product;
 
 
-            face_img.id = "face";
-            prod_img.id = "product";
+            face_img.id = "face_image";
+            prod_img.id = "product_image";
             face_img.className = "images";
             prod_img.className = "images";
-            container.appendChild(face_img);
-            container.appendChild(prod_img);
+            face.appendChild(face_img);
+            product.appendChild(prod_img);
             //document.body.append(face_img);
             //document.body.append(prod_img);
-            document.head.insertAdjacentHTML("beforeend", `<style>.images{margin: 100px;} #container{text-align:center;}</style>`);
+            document.head.insertAdjacentHTML("beforeend", `<style>.Box{display: inline-block; margin: 40px;} #container{text-align:center;} .names{font-family: Arial; font-size: 30px; margin-bottom: 10px;}</style>`);
 
 
         };

@@ -29,10 +29,10 @@ class ImageUploadView(APIView):
             face_names = [
                 "Barack Obama",
                 "Joe Biden",
-                "Aidana Baimbetova",
-                "Doyoon Lee",
-                "Hibiki Yoshizaki",
-                "Yui Maruyama"
+                "Aidana_Baimbetova",
+                "Doyoon_Lee",
+                "Hibiki_Yoshizaki",
+                "Yui_Maruyama"
             ]
             face_pathes = [
                 "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/President_Barack_Obama.jpg/440px-President_Barack_Obama.jpg",
@@ -43,9 +43,14 @@ class ImageUploadView(APIView):
                 "https://images.microcms-assets.io/assets/1909f44556aa4db1802e23ba78dbc874/b7dbaa6f9b214ab4b9e5559c256c2282/y-maruyama.PNG?fm=webp&w=250&q=50"
             ]
             product_names = [
-                "chips-sio,",
+                "chips-sio",
                 "coffee-black",
                 "coffee-latte"
+            ]
+            product_names_display = [
+                "ポテトチップス じゃがいもと塩",
+                "ファイア ワンデイブラック",
+                "Tully's barista's 無糖 latte"
             ]
             product_pathes = [
                 'https://store.nissin.com/cdn/shop/files/97377_800x.png?v=1689059105',
@@ -63,11 +68,13 @@ class ImageUploadView(APIView):
 
             #match prods
             product_path_display = ''
+            product_name_display = ''
             i = 0
             for prod_name in product_names:
                 i += 1
                 if results[1].lower() in prod_name.lower():
                     product_path_display = product_pathes[i - 1]
+                    product_name_display = product_names_display[i-1]
                     print('yay')
             print(product_path_display)
             print('yo')
@@ -77,6 +84,8 @@ class ImageUploadView(APIView):
                     'type': 'send_message',
                     'message': name_path_display,
                     'product': product_path_display,
+                    'face_name': results[2],
+                    'product_name': product_name_display
                 }
             )
             return Response(results, status=status.HTTP_200_OK)
@@ -147,10 +156,10 @@ class ImageUploadView(APIView):
         known_face_names = [
             "Barack Obama",
             "Joe Biden",
-            "Aidana Baimbetova",
-            "Doyoon Lee",
-            "Hibiki Yoshizaki",
-            "Yui Maruyama"
+            "Aidana_Baimbetova",
+            "Doyoon_Lee",
+            "Hibiki_Yoshizaki",
+            "Yui_Maruyama"
         ]
 
         # Initialize some variables
